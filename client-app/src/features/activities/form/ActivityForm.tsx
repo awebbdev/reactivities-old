@@ -18,7 +18,7 @@ import { Activity } from '../../../app/models/Activity';
 export default observer(function ActivityForm() {
     const history = useHistory();
     const {activityStore} = useStore()
-    const { createActivity, updateActivity, 
+    const { createActivity, updateActivity,
             loading, loadActivity, loadingInitial} = activityStore;
     const {id} = useParams<{id:string}>();
 
@@ -29,7 +29,7 @@ export default observer(function ActivityForm() {
         description: '',
         date: null,
         city:'',
-        venue:''        
+        venue:''
     });
 
     const validationSchema = Yup.object({
@@ -51,7 +51,7 @@ export default observer(function ActivityForm() {
     function handleFormSubmit(activity: Activity) {
         if( activity.id.length === 0 ){
             let newActivity = {
-                ...activity, 
+                ...activity,
                 id: uuid()
             };
             createActivity(newActivity).then(() => history.push(`/activities/${newActivity.id}`));
@@ -63,9 +63,9 @@ export default observer(function ActivityForm() {
     if(loadingInitial) return <LoadingComponent content='Loading activity...'/>
 
     return (
-        <Segment clearing>  
+        <Segment clearing>
             <Header content='Activity Details' sub color='teal' />
-            <Formik 
+            <Formik
                 validationSchema={validationSchema}
                 enableReinitialize
                 initialValues={activity}
@@ -80,12 +80,12 @@ export default observer(function ActivityForm() {
                             name='date'
                             showTimeSelect
                             timeCaption='time'
-                            dateFormat='MMMM d, yyyy h:mm aa'    
+                            dateFormat='MMMM d, yyyy h:mm aa'
                         />
                         <Header content='Location Details' sub color='teal' />
                         <MyTextInput placeholder='City'  name='city' />
                         <MyTextInput placeholder='Venue' name='venue' />
-                        <Button 
+                        <Button
                             disabled={ isSubmitting || !dirty || !isValid }
                             floated='right' positive type='submit' content='Submit' loading={loading} />
                         <Button as={Link} to='/activities' floated='right' type='button' content='Cancel' />
